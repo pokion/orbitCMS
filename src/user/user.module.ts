@@ -2,13 +2,20 @@ import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/c
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { PrismaModule } from './../prisma/prisma.module';
-import { RegisterMiddleware } from './middleware/register.middleware'
+import { RegisterMiddleware } from './middleware/register.middleware';
+import { JwtModule } from '@nestjs/jwt';
 
 
 @Module({
 	controllers: [UserController],
 	providers: [UserService],
-	imports: [PrismaModule]
+	imports: [
+	PrismaModule,
+	JwtModule.register({
+		secret: "@K@#2n32o@(o",
+		signOptions: { expiresIn: '2h' },
+	}),
+	],
 })
 
 export class UserModule {
