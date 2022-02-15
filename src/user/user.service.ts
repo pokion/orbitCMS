@@ -13,6 +13,9 @@ export class UserService {
 
 		data.password = hash;
 
-		return this.prisma.user.create({data})	
+		let returnUser = await this.prisma.user.create({data});
+		delete returnUser.password;
+
+		return returnUser; 
 	}
 }
